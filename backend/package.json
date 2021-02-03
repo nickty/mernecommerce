@@ -5,9 +5,11 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1", 
-    "start": "nodemon backend/server.js"
+    "start": "node backend/server", 
+    "dev" : "SET NODE_ENV=development& nodemon backend/server", 
+    "prod" : "SET NODE_ENV=production& nodemon backend/server"
   },
-  "author": "",
+  "author": "Mizanur Rahman",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
