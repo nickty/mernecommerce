@@ -19,7 +19,7 @@ exports.newProduct = catchAsynicErrors (async (req, res, next) => {
 
 //get all products => /api/v1/products
 
-exports.getProducts = async (req, res, next) => {
+exports.getProducts = catchAsynicErrors (async (req, res, next) => {
 
     const resPerPage = 4; 
 
@@ -39,10 +39,10 @@ exports.getProducts = async (req, res, next) => {
         productCount,
         products
     })
-}
+})
 
 //get signle product details => /api/v1/product/:id
-exports.getSingleProduct = async (req, res, next) =>{
+exports.getSingleProduct = catchAsynicErrors (async (req, res, next) =>{
     const product = await Product.findById(req.params.id)
 
     if(!product){
@@ -53,17 +53,14 @@ exports.getSingleProduct = async (req, res, next) =>{
         success: true, 
         product
     })
-}
+})
 
 //update the product => /api/v1/product/:id
-exports.updateProduct = async (req, res, next) => {
+exports.updateProduct = catchAsynicErrors (async (req, res, next) => {
     let product = await Product.findById(req.params.id)
 
     if(!product){
-        return res.status(404).json({
-            success: false, 
-            message: 'Product not found'
-        })
+        return next(new ErrorHander('Product not found', 404))
     }
 
     product = await Product.findByIdAndUpdate(req.params.id, req.body, {
@@ -76,17 +73,14 @@ exports.updateProduct = async (req, res, next) => {
         success: true, 
         product
     })
-}
+})
 
 //Delete product => /api/v1/admin/product/:id
-exports.deleteProduct = async (req, res, next) => {
+exports.deleteProduct = catchAsynicErrors (async (req, res, next) => {
     let product = await Product.findById(req.params.id)
 
     if(!product){
-        return res.status(404).json({
-            success: false, 
-            message: 'Product not found'
-        })
+        return next(new ErrorHander('Product not found', 404))
     }
 
     await product.remove()
@@ -95,4 +89,4 @@ exports.deleteProduct = async (req, res, next) => {
         success: true, 
         message: 'Product is deleted'
     })
-}
+})

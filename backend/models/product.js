@@ -9,13 +9,13 @@ const productSchema = new mongoose.Schema({
     }, 
     price: {
         type: Number, 
-        required: [true, 'Please Enter Product name'], 
+        required: [true, 'Please Enter Product Price'], 
         maxlength: [5, 'Product price can not be that much'], 
-        default: 0.0
+        
     }, 
     description: {
         type: String, 
-        required: [true, 'Please Enter Product name'], 
+        required: [true, 'Please Enter Product description'], 
         
   
     },
